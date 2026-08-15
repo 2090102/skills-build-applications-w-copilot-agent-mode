@@ -19,7 +19,7 @@ const getApiUrl = (): string => {
 };
 
 // MongoDB Connection URI
-const MONGO_URI = 'mongodb://localhost:27017/octofit-tracker';
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
 
 // Middleware
 app.use(express.json());

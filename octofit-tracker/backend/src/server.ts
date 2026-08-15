@@ -7,6 +7,15 @@ import activitiesRouter from './routes/activities';
 import leaderboardRouter from './routes/leaderboard';
 import workoutsRouter from './routes/workouts';
 
+/**
+ * Server Configuration
+ * 
+ * Codespaces Support:
+ * - Detects CODESPACE_NAME environment variable
+ * - Builds API URL: https://CODESPACE_NAME-8000.app.github.dev
+ * - Falls back to http://localhost:8000 for local development
+ */
+
 const PORT = 8000;
 
 // MongoDB Connection URI

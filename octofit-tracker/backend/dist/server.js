@@ -12,6 +12,14 @@ const teams_1 = __importDefault(require("./routes/teams"));
 const activities_1 = __importDefault(require("./routes/activities"));
 const leaderboard_1 = __importDefault(require("./routes/leaderboard"));
 const workouts_1 = __importDefault(require("./routes/workouts"));
+/**
+ * Server Configuration
+ *
+ * Codespaces Support:
+ * - Detects CODESPACE_NAME environment variable
+ * - Builds API URL: https://CODESPACE_NAME-8000.app.github.dev
+ * - Falls back to http://localhost:8000 for local development
+ */
 const PORT = 8000;
 // MongoDB Connection URI
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';

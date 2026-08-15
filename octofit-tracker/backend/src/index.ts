@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import mongoose from 'mongoose';
+import { getApiUrl, getApiConfig } from './config/api';
 import usersRouter from './routes/users';
 import teamsRouter from './routes/teams';
 import activitiesRouter from './routes/activities';
@@ -8,15 +9,6 @@ import workoutsRouter from './routes/workouts';
 
 const app: Express = express();
 const PORT = 8000;
-
-// Determine API URL based on Codespaces environment
-const getApiUrl = (): string => {
-  const codespaceName = process.env.CODESPACE_NAME;
-  if (codespaceName) {
-    return `https://${codespaceName}-${PORT}.app.github.dev`;
-  }
-  return `http://localhost:${PORT}`;
-};
 
 // MongoDB Connection URI
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
@@ -42,7 +34,8 @@ app.get('/api/health', (req: Request, res: Response) => {
   res.json({ 
     status: 'Server is running', 
     port: PORT,
-    apiUrl: getApiUrl()
+    apiUrl: getApiUrl(),
+    config: getApiConfig(),
   });
 });
 
@@ -56,6 +49,15 @@ app.use('/api/workouts', workoutsRouter);
 // Start server
 app.listen(PORT, () => {
   const apiUrl = getApiUrl();
-  console.log(`Server running on ${apiUrl}`);
+  const config = getApiConfig();
+  console.log(`\n🚀 OctoFit Tracker API Server`);
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  console.log(`Environment: ${config.environment}`);
+  console.log(`API URL: ${apiUrl}`);
+  console.log(`Port: ${PORT}`);
+  if (config.isCodespaces) {
+    console.log(`Codespace: ${config.codespaceName}`);
+  }
   console.log(`MongoDB: ${MONGO_URI}`);
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
 });
